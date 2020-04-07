@@ -1,8 +1,7 @@
 package com.thoughtworks.collection;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Reduce {
 
@@ -13,17 +12,26 @@ public class Reduce {
     }
 
     public double getAverage() {
-        throw new NotImplementedException();
+        return arrayList.stream()
+                .mapToDouble(num -> num)
+                .average()
+                .orElse(Double.NaN);
     }
 
 
     public int getIndexOfFirstEven() {
-        throw new NotImplementedException();
+        return IntStream.range(0, arrayList.size())
+                .filter(index -> arrayList.get(index) % 2 == 0)
+                .findFirst()
+                .orElse(-1);
     }
 
 
     public int getLastOdd() {
-        throw new NotImplementedException();
+        return arrayList.stream()
+                .filter(num -> num % 2 != 0)
+                .reduce((num1, num2) -> num2)
+                .orElse(-1);
     }
 
 
