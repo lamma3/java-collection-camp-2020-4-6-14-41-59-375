@@ -1,11 +1,8 @@
 package com.thoughtworks.collection;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Add {
     public int getSumOfProcessedOdds(List<Integer> arrayList) {
@@ -16,26 +13,20 @@ public class Add {
     }
 
     public List<Integer> sortByEvenAndOdd(List<Integer> arrayList) {
-        List<Integer> evenList = new ArrayList<>();
-        List<Integer> oddList = new ArrayList<>();
-
-        for (Integer num: arrayList) {
-            if (num % 2 == 0) {
-                evenList.add(num);
-            } else {
-                oddList.add(num);
-            }
-        }
-
-        evenList = evenList.stream()
-                .sorted()
+        return arrayList.stream()
+                .sorted((num1, num2) -> {
+                    if (num1 % 2 == 0 && num2 % 2 == 0) {
+                        return num1.compareTo(num2);
+                    }
+                    if (num1 % 2 != 0 && num2 % 2 != 0) {
+                        return num2.compareTo(num1);
+                    }
+                    if (num1 % 2 == 0) {
+                        return -1;
+                    }
+                    return 1;
+                })
                 .collect(Collectors.toList());
-        oddList = oddList.stream()
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-        return Stream.concat(evenList.stream(), oddList.stream())
-                .collect(Collectors.toList());
-
     }
 
 
